@@ -38,7 +38,14 @@ const initialState: PaymentState = {
 const paymentSlice = createSlice({
   name: 'payment',
   initialState,
-  reducers: {},
+  // reducers
+  reducers: {
+    clearPayment: (state) => {
+      state.sessionId = null;
+      state.message = '';
+      state.status = 'idle';
+    },
+  },
   extraReducers: (builder) => {
     // initiatePayment
     builder
@@ -73,4 +80,5 @@ const paymentSlice = createSlice({
   },
 });
 
+export const { clearPayment } = paymentSlice.actions;
 export default paymentSlice.reducer;

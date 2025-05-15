@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { initiatePayment } from './paymentSlice';
 import { Paper, Typography, Box, TextField, Button, Alert } from '@mui/material';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const InitiatePayment = () => {
    const dispatch = useAppDispatch();
+   const navigate = useNavigate();
    const { status, message, sessionId } = useAppSelector((state) => state.payment);
 
    const location = useLocation();
@@ -29,6 +30,16 @@ const InitiatePayment = () => {
       e.preventDefault();
       dispatch(initiatePayment(form));
    };
+
+   // Redirect to /confirm with sessionId when sessionId is available
+   useEffect(() => {
+      if (sessionId) {
+         const timer = setTimeout(() => {
+            navigate('/confirm', { state: { sessionId } });
+         }, 3000); // 3 seg
+         return () => clearTimeout(timer);
+      }
+   }, [sessionId, navigate]);
 
    return (
       <Paper elevation={3} sx={{ p: 4, maxWidth: 400, mx: 'auto', mt: 6 }}>

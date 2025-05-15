@@ -1,16 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { confirmPayment } from './paymentSlice';
+import { confirmPayment, clearPayment } from './paymentSlice';
 import { Paper, Typography, Box, TextField, Button, Alert } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 
 const ConfirmPayment = () => {
   const dispatch = useAppDispatch();
   const { status, message } = useAppSelector((state) => state.payment);
+  const location = useLocation();
+
+  // Get sessionId from navigation state if available
+  const sessionIdFromState = location.state?.sessionId || '';
 
   const [form, setForm] = useState({
-    sessionId: '',
+    sessionId: sessionIdFromState,
     token: '',
   });
+
+  // If sessionId comes from navigation, set it in the form
+  useEffect(() => {
+    if (sessionIdFromState) {
+      setForm((prev) => ({
+        ...prev,
+        sessionId: sessionIdFromState,
+      }));
+    }
+  }, [sessionIdFromState]);
+
+  // Clear alerts and form on unmount
+  useEffect(() => {
+    return () => {
+      dispatch(clearPayment());
+      setForm({ sessionId: '', token: '' });
+    };
+  }, [dispatch]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -34,6 +57,7 @@ const ConfirmPayment = () => {
           onChange={handleChange}
           variant="outlined"
           required
+          disabled={!!sessionIdFromState}
         />
         <TextField
           label="Token"
