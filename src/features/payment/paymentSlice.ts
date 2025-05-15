@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../app/axios';
 import { ConfirmPaymentPayload, InitiatePaymentPayload, PaymentState } from './types';
 
-// Iniciar el pago
+// Initiate payment
 export const initiatePayment = createAsyncThunk(
   'payment/initiate',
   async (payload: InitiatePaymentPayload, { rejectWithValue }) => {
@@ -15,7 +15,7 @@ export const initiatePayment = createAsyncThunk(
   }
 );
 
-// Confirmar el pago
+// Confirm payment
 export const confirmPayment = createAsyncThunk(
   'payment/confirm',
   async (payload: ConfirmPaymentPayload, { rejectWithValue }) => {

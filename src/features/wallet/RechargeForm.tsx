@@ -2,14 +2,18 @@ import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { Paper, Typography, Box, TextField, Button, Alert } from '@mui/material';
 import { rechargeWallet } from './walletRechargeSlice';
+import { useLocation } from 'react-router-dom';
 
 export const RechargeForm = () => {
   const dispatch = useAppDispatch();
   const { status, message } = useAppSelector((state) => state.walletRecharge);
 
+  const location = useLocation();
+  const initialData = location.state || {};
+
   const [form, setForm] = useState({
-    document: '',
-    phone: '',
+    document: initialData.document || '',
+    phone: initialData.phone || '',
     amount: 0,
   });
 
@@ -31,7 +35,13 @@ export const RechargeForm = () => {
       <Typography variant="h5" component="h2" gutterBottom>
         Recargar Billetera
       </Typography>
-      <Box component="form" onSubmit={handleSubmit} display="flex" flexDirection="column" gap={2}>
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        display="flex"
+        flexDirection="column"
+        gap={2}
+      >
         <TextField
           label="Documento"
           name="document"
@@ -39,6 +49,7 @@ export const RechargeForm = () => {
           onChange={handleChange}
           variant="outlined"
           required
+          disabled
         />
         <TextField
           label="Teléfono"
@@ -47,6 +58,7 @@ export const RechargeForm = () => {
           onChange={handleChange}
           variant="outlined"
           required
+          disabled
         />
         <TextField
           label="Monto"
@@ -56,14 +68,22 @@ export const RechargeForm = () => {
           onChange={handleChange}
           variant="outlined"
           required
-          slotProps={{ input: { inputProps: { min: 0 } } }}
+          inputProps={{ min: 0 }}
         />
-        <Button type="submit" variant="contained" color="primary" disabled={status === 'loading'}>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          disabled={status === 'loading'}
+        >
           {status === 'loading' ? 'Recargando...' : 'Recargar'}
         </Button>
       </Box>
       {message && (
-        <Alert severity={status === 'succeeded' ? 'success' : 'error'} sx={{ mt: 2 }}>
+        <Alert
+          severity={status === 'succeeded' ? 'success' : 'error'}
+          sx={{ mt: 2 }}
+        >
           {message}
         </Alert>
       )}

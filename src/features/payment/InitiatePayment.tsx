@@ -2,14 +2,18 @@ import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { initiatePayment } from './paymentSlice';
 import { Paper, Typography, Box, TextField, Button, Alert } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 
 const InitiatePayment = () => {
    const dispatch = useAppDispatch();
    const { status, message, sessionId } = useAppSelector((state) => state.payment);
 
+   const location = useLocation();
+   const initialData = location.state || {};
+
    const [form, setForm] = useState({
-      document: '',
-      phone: '',
+      document: initialData.document || '',
+      phone: initialData.phone || '',
       amount: 0,
    });
 
@@ -36,14 +40,14 @@ const InitiatePayment = () => {
                Session ID: {sessionId}
             </Alert>
          )}
-          <Box
+         <Box
             component="form"
             onSubmit={handleSubmit}
             display="flex"
             flexDirection="column"
             gap={2}
             sx={{ mt: 3 }}
-          >
+         >
             <TextField
                label="Documento"
                name="document"
@@ -51,6 +55,7 @@ const InitiatePayment = () => {
                onChange={handleChange}
                variant="outlined"
                required
+               disabled
             />
             <TextField
                label="Teléfono"
@@ -59,6 +64,7 @@ const InitiatePayment = () => {
                onChange={handleChange}
                variant="outlined"
                required
+               disabled
             />
             <TextField
                label="Monto"

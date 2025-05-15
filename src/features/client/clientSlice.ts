@@ -5,7 +5,7 @@ import {
   RegisterClientPayload,
 } from './types';
 
-// registrar cliente
+// register client
 export const registerClient = createAsyncThunk(
   'client/register',
   async (payload: RegisterClientPayload, { rejectWithValue }) => {
@@ -18,7 +18,7 @@ export const registerClient = createAsyncThunk(
   }
 );
 
-// obtener lista de clientes
+// get list of clients
 export const getClients = createAsyncThunk(
   'client/getAll',
   async (_, { rejectWithValue }) => {
@@ -31,7 +31,7 @@ export const getClients = createAsyncThunk(
   }
 );
 
-// Estado inicial
+// Initial state
 const initialState: ClientState = {
   clients: [],
   status: 'idle',

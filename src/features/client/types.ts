@@ -4,6 +4,7 @@ export interface Client {
   name: string;
   email: string;
   phone: string;
+  balance: string;
 }
 
 export interface ClientState {

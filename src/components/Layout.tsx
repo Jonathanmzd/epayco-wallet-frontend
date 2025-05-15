@@ -76,9 +76,6 @@ const Layout = () => {
                 <MenuItem component={Link} to="/register" onClick={handleClose}>
                   Registrar
                 </MenuItem>
-                <MenuItem component={Link} to="/recharge" onClick={handleClose}>
-                  Recargar
-                </MenuItem>
               </Menu>
             </>
           ) : (
@@ -102,26 +99,6 @@ const Layout = () => {
                     variant="outlined"
                   >
                     Registrar
-                  </Button>
-                </Box>
-                <Box component="li" sx={{ mr: 1 }}>
-                  <Button
-                    color="primary"
-                    component={Link}
-                    to="/recharge"
-                    variant="outlined"
-                  >
-                    Recargar
-                  </Button>
-                </Box>
-                <Box component="li" sx={{ mr: 1 }}>
-                  <Button
-                    color="primary"
-                    component={Link}
-                    to="/balance"
-                    variant="outlined"
-                  >
-                    Balance
                   </Button>
                 </Box>
               </Box>
