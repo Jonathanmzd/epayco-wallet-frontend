@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import clientReducer from '../features/client/clientSlice';
-import walletReducer from '../features/wallet/walletSlice';
+import walletRechargeReducer from '../features/wallet/walletRechargeSlice';
+import walletBalanceReducer from '../features/wallet/walletBalanceSlice';
 
 export const store = configureStore({
   reducer: {
     client: clientReducer,
-    wallet: walletReducer,
+    walletRecharge: walletRechargeReducer,
+    walletBalance: walletBalanceReducer,
   },
 });
 

@@ -14,8 +14,8 @@ export const rechargeWallet = createAsyncThunk(
   }
 );
 
-const walletRechargeReducer = createSlice({
-  name: 'wallet',
+const walletRechargeSlice = createSlice({
+  name: 'walletRecharge',
   initialState: {
     status: 'idle',
     message: '',
@@ -37,4 +37,4 @@ const walletRechargeReducer = createSlice({
   },
 });
 
-export default walletRechargeReducer.reducer;
+export default walletRechargeSlice.reducer;

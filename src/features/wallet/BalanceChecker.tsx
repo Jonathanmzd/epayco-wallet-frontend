@@ -1,35 +1,30 @@
 import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { checkBalance } from './walletBalanceSlice';
 import { Paper, Typography, Box, TextField, Button, Alert } from '@mui/material';
-import { rechargeWallet } from './walletRechargeSlice';
 
-export const RechargeForm = () => {
+const BalanceChecker = () => {
   const dispatch = useAppDispatch();
-  const { status, message } = useAppSelector((state) => state.walletRecharge);
+  const { balance, status, message } = useAppSelector((state) => state.walletBalance);
 
   const [form, setForm] = useState({
     document: '',
     phone: '',
-    amount: 0,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm({
-      ...form,
-      [name]: name === 'amount' ? Number(value) : value,
-    });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(rechargeWallet(form));
+    dispatch(checkBalance(form));
   };
 
   return (
     <Paper elevation={3} sx={{ p: 4, maxWidth: 400, mx: 'auto', mt: 6 }}>
       <Typography variant="h5" component="h2" gutterBottom>
-        Recargar Billetera
+        Consultar Saldo
       </Typography>
       <Box component="form" onSubmit={handleSubmit} display="flex" flexDirection="column" gap={2}>
         <TextField
@@ -48,20 +43,15 @@ export const RechargeForm = () => {
           variant="outlined"
           required
         />
-        <TextField
-          label="Monto"
-          name="amount"
-          type="number"
-          value={form.amount}
-          onChange={handleChange}
-          variant="outlined"
-          required
-          slotProps={{ input: { inputProps: { min: 0 } } }}
-        />
         <Button type="submit" variant="contained" color="primary" disabled={status === 'loading'}>
-          {status === 'loading' ? 'Recargando...' : 'Recargar'}
+          {status === 'loading' ? 'Consultando...' : 'Consultar'}
         </Button>
       </Box>
+      {balance !== null && (
+        <Alert severity="info" sx={{ mt: 2 }}>
+          💰 Saldo: ${balance}
+        </Alert>
+      )}
       {message && (
         <Alert severity={status === 'succeeded' ? 'success' : 'error'} sx={{ mt: 2 }}>
           {message}
@@ -71,4 +61,4 @@ export const RechargeForm = () => {
   );
 };
 
-export default RechargeForm;
+export default BalanceChecker;
