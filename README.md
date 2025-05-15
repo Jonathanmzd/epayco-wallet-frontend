@@ -44,3 +44,63 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Tecnologías instaladas
+
+- **React**: Biblioteca principal para construir la interfaz de usuario.
+- **TypeScript**: Superset de JavaScript que añade tipado estático.
+- **Redux Toolkit**: Manejo de estado global de la aplicación.
+- **React Redux**: Enlace entre React y Redux.
+- **React Router DOM**: Enrutamiento para aplicaciones de React.
+- **Material UI (MUI)**: Librería de componentes UI modernos y responsivos.
+- **MUI Icons**: Iconos oficiales de Material UI.
+- **MUI Data Grid**: Componente de tabla avanzada para mostrar datos.
+- **Axios**: Cliente HTTP para consumir APIs.
+- **Jest y Testing Library**: Herramientas para pruebas unitarias y de integración.
+- **tree-cli**: Utilidad para visualizar la estructura de carpetas.
+- **web-vitals**: Medición de métricas de rendimiento web.
+
+---
+
+## Cómo arrancar el proyecto
+
+1. **Instala las dependencias**
+
+   ```bash
+   npm install
+   ```
+
+2. **Configura las variables de entorno**
+
+   Si es necesario, copia `.env.example` a `.env` y ajusta los valores según tu entorno.
+
+3. **API Secundaria (Services)**
+
+   se levanta por defecto en el puerto `3001`. Si necesitas cambiar el puerto, edítalo en el archivo `.env`.
+
+4. **Arranca la aplicación en modo desarrollo**
+
+   ```bash
+   npm start
+   ```
+
+   Esto abrirá la app en [http://localhost:3002](http://localhost:3002).
+
+5. **Ejecuta pruebas (opcional)**
+
+   ```bash
+   npm test
+   ```
+
+6. **Construye la aplicación para producción (opcional)**
+
+   ```bash
+   npm run build
+   ```
+
+---
+
+**Notas:**
+- Asegúrate de tener Node.js y npm actualizados.
+- Si tienes problemas con dependencias, elimina la carpeta `node_modules` y ejecuta nuevamente `npm install`.
+- El frontend se conecta por defecto al backend configurado en los archivos de entorno o en el código fuente.
