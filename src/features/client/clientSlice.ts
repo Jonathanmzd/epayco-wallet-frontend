@@ -1,17 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../app/axios';
-import { RegisterClientPayload } from './types';
+import {
+  ClientState,
+  RegisterClientPayload,
+} from './types';
 
-interface ClientState {
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  message: string;
-}
-
-const initialState: ClientState = {
-  status: 'idle',
-  message: '',
-};
-
+// registrar cliente
 export const registerClient = createAsyncThunk(
   'client/register',
   async (payload: RegisterClientPayload, { rejectWithValue }) => {
@@ -24,11 +18,33 @@ export const registerClient = createAsyncThunk(
   }
 );
 
+// obtener lista de clientes
+export const getClients = createAsyncThunk(
+  'client/getAll',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api.get('/client/all');
+      return response.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data?.message || 'Failed to fetch clients');
+    }
+  }
+);
+
+// Estado inicial
+const initialState: ClientState = {
+  clients: [],
+  status: 'idle',
+  message: '',
+};
+
+// clientSlice
 const clientSlice = createSlice({
   name: 'client',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    // registerClient
     builder
       .addCase(registerClient.pending, (state) => {
         state.status = 'loading';
@@ -36,9 +52,23 @@ const clientSlice = createSlice({
       })
       .addCase(registerClient.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.message = action.payload.message || 'Registered successfully';
+        state.message = action.payload.message;
       })
       .addCase(registerClient.rejected, (state, action) => {
+        state.status = 'failed';
+        state.message = action.payload as string;
+      });
+
+    // getClients
+    builder
+      .addCase(getClients.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(getClients.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.clients = action.payload.data;
+      })
+      .addCase(getClients.rejected, (state, action) => {
         state.status = 'failed';
         state.message = action.payload as string;
       });

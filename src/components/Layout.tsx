@@ -88,7 +88,7 @@ const Layout = () => {
                   <Button
                     color="primary"
                     component={Link}
-                    to="/"
+                    to="/clients"
                     variant="outlined"
                   >
                     Inicio
@@ -104,7 +104,7 @@ const Layout = () => {
                     Registrar
                   </Button>
                 </Box>
-                <Box component="li">
+                <Box component="li" sx={{ mr: 1 }}>
                   <Button
                     color="primary"
                     component={Link}
@@ -112,6 +112,16 @@ const Layout = () => {
                     variant="outlined"
                   >
                     Recargar
+                  </Button>
+                </Box>
+                <Box component="li" sx={{ mr: 1 }}>
+                  <Button
+                    color="primary"
+                    component={Link}
+                    to="/balance"
+                    variant="outlined"
+                  >
+                    Balance
                   </Button>
                 </Box>
               </Box>
