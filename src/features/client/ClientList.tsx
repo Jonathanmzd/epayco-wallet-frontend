@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
-import { DataGrid, GridColDef, GridActionsCellItem } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getClients } from './clientSlice';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const ClientList = () => {
   const dispatch = useAppDispatch();
