@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../app/axios';
-import { InitiatePaymentPayload, PaymentState } from './types';
+import { ConfirmPaymentPayload, InitiatePaymentPayload, PaymentState } from './types';
 
+// Iniciar el pago
 export const initiatePayment = createAsyncThunk(
   'payment/initiate',
   async (payload: InitiatePaymentPayload, { rejectWithValue }) => {
@@ -14,17 +15,32 @@ export const initiatePayment = createAsyncThunk(
   }
 );
 
+// Confirmar el pago
+export const confirmPayment = createAsyncThunk(
+  'payment/confirm',
+  async (payload: ConfirmPaymentPayload, { rejectWithValue }) => {
+    try {
+      const response = await api.post('/payment/confirm', payload);
+      return response.data; // { message }
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data?.message || 'Confirmation failed');
+    }
+  }
+);
+
 const initialState: PaymentState = {
   sessionId: null,
   message: '',
   status: 'idle',
 };
 
+// paymentSlice
 const paymentSlice = createSlice({
   name: 'payment',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    // initiatePayment
     builder
       .addCase(initiatePayment.pending, (state) => {
         state.status = 'loading';
@@ -37,6 +53,20 @@ const paymentSlice = createSlice({
         state.sessionId = action.payload.sessionId;
       })
       .addCase(initiatePayment.rejected, (state, action) => {
+        state.status = 'failed';
+        state.message = action.payload as string;
+      });
+    // confirmPayment
+    builder
+      .addCase(confirmPayment.pending, (state) => {
+        state.status = 'loading';
+        state.message = '';
+      })
+      .addCase(confirmPayment.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.message = action.payload.message;
+      })
+      .addCase(confirmPayment.rejected, (state, action) => {
         state.status = 'failed';
         state.message = action.payload as string;
       });

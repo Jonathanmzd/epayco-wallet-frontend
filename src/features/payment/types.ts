@@ -9,3 +9,8 @@ export interface PaymentState {
   message: string;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
 }
+
+export interface ConfirmPaymentPayload {
+  sessionId: number;
+  token: string;
+}

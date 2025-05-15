@@ -5,6 +5,7 @@ import RechargeForm from '../features/wallet/RechargeForm';
 import BalanceChecker from '../features/wallet/BalanceChecker';
 import ClientList from '../features/client/ClientList';
 import InitiatePayment from '../features/payment/InitiatePayment';
+import ConfirmPayment from '../features/payment/ConfirmPayment';
 
 const AppRoutes = () => {
   const routes = useRoutes([
@@ -17,6 +18,7 @@ const AppRoutes = () => {
         { path: 'balance', element: <BalanceChecker /> },
         { path: 'clients', element: <ClientList /> },
         { path: 'pay', element: <InitiatePayment /> },
+        { path: 'confirm', element: <ConfirmPayment /> },
         { path: '*', element: <div>404 - Page not found</div> },
       ],
     },
